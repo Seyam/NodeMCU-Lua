@@ -9,3 +9,6 @@ tmr.stop(1)
 print("Got IP. "..wifi.sta.getip())
 end 
 end)
+
+
+tmr.alarm(0,10000,0,function() dofile("wvms.lua") end)
