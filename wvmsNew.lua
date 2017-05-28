@@ -70,15 +70,21 @@ tmr.alarm(1, 2000, 1, function() publishWeight() end ) --publish every 3 seconds
 
 function publishWeight()
 
-  local state = tostring(gpio.read(waterPin))
+  local state = gpio.read(waterPin)
 
   -- print(state)
   
-  -- publish a message with data = my_message, QoS = 0, retain = 0
-  mqtt:publish("wvms/test/weightStatus",state,0,0, function(conn)
-    print("Published waterState: "..state)
-  end)
+  if state==1 then
 
- end
+      -- publish a message with data = my_message, QoS = 0, retain = 0
+      mqtt:publish("wvms/test/weightStatus","1",0,0, function(conn)
+        print("Published waterState: "..state)
+      end)
+
+  else
+      return
+  end
+
+end
 
 
